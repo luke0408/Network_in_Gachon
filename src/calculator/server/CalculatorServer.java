@@ -1,5 +1,7 @@
 package calculator.server;
 
+import calculator.model.ServerInfo;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -9,7 +11,8 @@ import java.net.Socket;
 public class CalculatorServer {
 
     public static void main(String[] args) throws Exception {
-        ServerSocket serverSocket = new ServerSocket(6789);
+        ServerInfo serverInfo = new ServerInfo();
+        ServerSocket serverSocket = new ServerSocket(serverInfo.getPort());
 
         while (true) {
             Socket socket = serverSocket.accept();

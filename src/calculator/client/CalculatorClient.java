@@ -1,5 +1,7 @@
 package calculator.client;
 
+import calculator.model.ServerInfo;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -12,17 +14,19 @@ import java.net.Socket;
 public class CalculatorClient {
 
     public static void main(String[] args) throws Exception {
-        Socket socket = new Socket("localhost", 6789);
+        ServerInfo serverInfo = new ServerInfo();
+        Socket socket = new Socket(serverInfo.getHost(), serverInfo.getPort());
 
         PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader stdIn =  new BufferedReader(new InputStreamReader(System.in));
 
         String line = null;
         InputThread inputThread = new InputThread(in);
         inputThread.start();
 
         while (true) {
+            Thread.sleep(100);
             System.out.println("format: [number] [operator] [number]");
             line = stdIn.readLine();
 
